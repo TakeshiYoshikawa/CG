@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         Title="Computer Graphics"
         MinHeight="200" MinWidth="300"
-        Height="600" Width="1000"
+        Height="460" Width="1000"
         xmlns:fw="clr-namespace:SourceChord.FluentWPF;assembly=FluentWPF"
         fw:AcrylicWindow.Enabled="True">
 
@@ -20,7 +20,7 @@
         </Grid.ColumnDefinitions>
 
         <StackPanel Grid.ColumnSpan="3">
-            <Button Content="Bresenham" HorizontalAlignment="Left" Margin="5,5,0,5" Width="100" Height="32" />
+            <Button Content="Bresenham" HorizontalAlignment="Left" Margin="5,5,0,5" Width="100" Height="32" Click="ButtonClick"/>
             <Button Content="Círculos" HorizontalAlignment="Left" Margin="5,5,0,5" Width="100" Height="32"/>
             <Button Content="Curvas" HorizontalAlignment="Left" Margin="5,5,0,5" Width="100" Height="32"/>
             <Button Content="Preenchimento" HorizontalAlignment="Left" Margin="5,5,0,5" Width="100" Height="32"/>
@@ -32,20 +32,36 @@
             <Button Content="Perspectiva" HorizontalAlignment="Left" Margin="5,5,0,5" Width="100" Height="32"/>
         </StackPanel>
 
-        <DockPanel Grid.Column="1" Margin="66,0,0,0">
-            <views:DynamicGridView x:Name="DynamicGridView" DataContext="{Binding}" Width="874" RenderTransformOrigin="0.632,0.501"/>
+        <Grid fw:PointerTracker.Enabled="True" Background="#01FFFFFF">
+            <ItemsControl Name="Board">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Margin="118,0,-942,0">
+                        </UniformGrid>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border Background="{Binding Path=Color}" 
+                            BorderBrush="Black" 
+                            BorderThickness="1" 
+                            MouseDown="CellClick" 
+                            Margin="2" 
+                            Tag="{Binding}">
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </Grid>
+        <!--
+            <DockPanel Grid.Column="1" Margin="66,0,0,0"
+                <views:DynamicGridView x:Name="DynamicGridView" DataContext="{Binding}" Width="874" RenderTransformOrigin="0.632,0.501"/>
         </DockPanel>
-
+        -->
+        
         <Grid Grid.Column="0">
-
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-
+        <!--
             <TextBlock
                 Grid.Row="4"
                 Text="Columns"
@@ -65,7 +81,7 @@
                 Grid.Row="4"
                 Text="{Binding Path=GridHeight}"
                 Margin="4,532,0,16"/>
-
+        -->
         </Grid>
     </Grid>
 </Window>
