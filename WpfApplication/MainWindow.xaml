@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         Title="Computer Graphics"
         MinHeight="200" MinWidth="300"
-        Height="460" Width="1000"
+        Height="517" Width="1000"
         xmlns:fw="clr-namespace:SourceChord.FluentWPF;assembly=FluentWPF"
         fw:AcrylicWindow.Enabled="True">
 
@@ -20,7 +20,7 @@
         </Grid.ColumnDefinitions>
 
         <StackPanel Grid.ColumnSpan="3">
-            <Button Content="Bresenham" HorizontalAlignment="Left" Margin="5,5,0,5" Width="100" Height="32" Click="ButtonClick"/>
+            <Button Content="Bresenham" HorizontalAlignment="Left" Margin="5,5,0,5" Width="100" Height="32" Click="Line"/>
             <Button Content="Círculos" HorizontalAlignment="Left" Margin="5,5,0,5" Width="100" Height="32"/>
             <Button Content="Curvas" HorizontalAlignment="Left" Margin="5,5,0,5" Width="100" Height="32"/>
             <Button Content="Preenchimento" HorizontalAlignment="Left" Margin="5,5,0,5" Width="100" Height="32"/>
@@ -30,10 +30,11 @@
             <Button Content="Transformações" HorizontalAlignment="Left" Margin="5,5,0,5" Width="100" Height="32"/>
             <Button Content="Projeções Orto" HorizontalAlignment="Left" Margin="5,5,0,5" Width="100" Height="32"/>
             <Button Content="Perspectiva" HorizontalAlignment="Left" Margin="5,5,0,5" Width="100" Height="32"/>
+            <Button Content="Limpar tela" HorizontalAlignment="Left" Margin="5,5,0,5" Width="100" Height="32" Click="RefreshUI"/>
         </StackPanel>
 
         <Grid fw:PointerTracker.Enabled="True" Background="#01FFFFFF">
-            <ItemsControl Name="Board">
+            <ItemsControl Name="Board" x:FieldModifier="public">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <UniformGrid Margin="118,0,-942,0">
@@ -54,34 +55,8 @@
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
         </Grid>
-        <!--
-            <DockPanel Grid.Column="1" Margin="66,0,0,0"
-                <views:DynamicGridView x:Name="DynamicGridView" DataContext="{Binding}" Width="874" RenderTransformOrigin="0.632,0.501"/>
-        </DockPanel>
-        -->
-        
+
         <Grid Grid.Column="0">
-        <!--
-            <TextBlock
-                Grid.Row="4"
-                Text="Columns"
-                Margin="4,460,0,89" RenderTransformOrigin="0.587,1.2"/>
-
-            <TextBox
-                Grid.Row="4"
-                Text="{Binding Path=GridWidth}"
-                Margin="4,485,0,67"/>
-
-            <TextBlock
-                Grid.Row="4"
-                Text="Rows"
-                Margin="4,507,0,42"/>
-
-            <TextBox
-                Grid.Row="4"
-                Text="{Binding Path=GridHeight}"
-                Margin="4,532,0,16"/>
-        -->
         </Grid>
     </Grid>
 </Window>
