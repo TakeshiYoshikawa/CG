@@ -18,8 +18,8 @@ namespace WpfApplication
 {
     public partial class MainWindow : Window
     {
-        private int rows = 20;
-        private int columns = 20;
+        private int rows = 25;
+        private int columns = 25;
         public List<Pixel> _board;
         public List<int> coordinates;
 
@@ -47,7 +47,7 @@ namespace WpfApplication
 
             coordinates.Add(point.X);
             coordinates.Add(point.Y);
-            //MessageBox.Show("[" + point.X.ToString() + "][" + point.Y.ToString() + "]");
+            MessageBox.Show("[" + point.X.ToString() + "] [" + point.Y.ToString() + "]");
         }
 
         public int GetIndex(int x, int y)
@@ -61,6 +61,11 @@ namespace WpfApplication
             bresenham.Algorithm(coordinates[0], coordinates[1], coordinates[2], coordinates[3]);
         }
 
+        private void Circle(object sender, RoutedEventArgs e)
+        {
+            var circle = new Circle();
+            circle.Algorithm(coordinates[0], coordinates[1], coordinates[2], coordinates[3]);
+        }
         public void RefreshUI(object sender, RoutedEventArgs e)
         {
             coordinates.Clear();
@@ -110,6 +115,63 @@ namespace WpfApplication
             Y = b;
         }
     }
+
+    public class Circle
+    {     
+        public void Algorithm(int x_center, int y_center, int x_radius, int y_radius)
+        {
+            int x = 0;
+            int radius = Radius(x_center, y_center, x_radius, y_radius);
+            int y = radius;
+            int p = 3 - (2 * radius);
+
+            DrawCircle(x_center, y_center, x, y);
+
+            while (x < y)
+            {
+                x++;
+                if(p < 0)
+                {
+                    p += (4 * x) + 6;
+                }
+                else
+                {
+                    y--;
+                    p += 4 * (x - y) + 10;
+                }
+                DrawCircle(x_center, y_center, x, y);
+            }
+        }
+
+        public void DrawCircle(int xc, int yc, int x, int y)
+        {
+            PutPixel(xc + x, yc + y, "Red");
+            PutPixel(xc - x, yc + y, "Red");
+            PutPixel(xc + x, yc - y, "Red");
+            PutPixel(xc - x, yc - y, "Red");
+
+            PutPixel(xc + y, yc + x, "Red");
+            PutPixel(xc - y, yc + x, "Red");
+            PutPixel(xc + y, yc - x, "Red");
+            PutPixel(xc - y, yc - x, "Red");
+        }
+
+        public void PutPixel(int x, int y, string color)
+        {
+            var windows = (MainWindow)Application.Current.MainWindow;
+            int index = windows.GetIndex(x, y);
+            windows._board[index].Color = color;
+        }
+
+        public int Radius(int x1, int y1, int x2, int y2)
+        {
+            int dx = Math.Abs(x2 - x1);
+            int dy = Math.Abs(y2 - y1);
+
+            return Math.Max(dx, dy);
+        }
+    }
+
     public class Bresenham
     {
         List<int> xn, yn;
