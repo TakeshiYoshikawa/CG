@@ -20,34 +20,32 @@ namespace WpfApplication
     {
         private int rows = 25;
         private int columns = 25;
-        public List<Pixel> _board;
-        public List<int> coordinates;
-
+        public List<Point> _board;
+        public List<Point> coordinates;
+        
         public MainWindow()
         {
             InitializeComponent();
 
-            _board = new List<Pixel>();
-            coordinates = new List<int>();
+            _board = new List<Point>();
+            coordinates = new List<Point>();
             for (int r = 0; r < rows; r++)
             {
                 for (int c = 0; c < columns; c++)
                 {
-                    _board.Add(new Pixel(r, c) { Color = "White" });
+                    _board.Add(new Point(r, c) { Color = "White" });
                 }
             }
             Board.ItemsSource = _board;
         }
 
-        private void CellClick(object sender, MouseButtonEventArgs e)
+        public void CellClick(object sender, MouseButtonEventArgs e)
         {
             var border = (Border)sender;
-            var point = (Pixel)border.Tag;
+            var point = (Point)border.Tag;
             point.Color = "Red";
 
-            coordinates.Add(point.X);
-            coordinates.Add(point.Y);
-            MessageBox.Show("[" + point.X.ToString() + "] [" + point.Y.ToString() + "]");
+            coordinates.Add(point);
         }
 
         public int GetIndex(int x, int y)
@@ -55,17 +53,24 @@ namespace WpfApplication
             return y + (x * rows);
         }
         
-        private void Line(object sender, RoutedEventArgs e)
+        public void Line(object sender, RoutedEventArgs e)
         {
             var bresenham = new Bresenham();
-            bresenham.Algorithm(coordinates[0], coordinates[1], coordinates[2], coordinates[3]);
+            bresenham.Algorithm(coordinates[0], coordinates[1]);
         }
 
-        private void Circle(object sender, RoutedEventArgs e)
+        public void Circle(object sender, RoutedEventArgs e)
         {
             var circle = new Circle();
-            circle.Algorithm(coordinates[0], coordinates[1], coordinates[2], coordinates[3]);
+            circle.Algorithm(coordinates[0], coordinates[1]);
         }
+        
+        public void Polyline(object sender, RoutedEventArgs e)
+        {
+            //var polylines = new Polyline();
+            //polylines.Algorithm();
+        }
+
         public void RefreshUI(object sender, RoutedEventArgs e)
         {
             coordinates.Clear();
@@ -76,56 +81,37 @@ namespace WpfApplication
         }
     }
 
-    public class Pixel
+    /*
+    public class Polilyne
     {
-        private string _color;
-
-        public Pixel(int x, int y)
+        public void Algorithm(IEnumerable<Point> points)
         {
-            X = x;
-            Y = y;
-        }
-
-        public int X { get; private set; }
-        public int Y { get; private set; }
-
-        public string Color
-        {
-            get { return _color; }
-            set
+            var endpoints = points.Skip(1).Concat(new[] { points.First() });
+            var pairs = points.Zip(endpoints, Tuple.Create);
+        
+            foreach(var pair in pairs)
             {
-                _color = value;
-                if (ColorChanged != null)
-                {
-                    ColorChanged(this, EventArgs.Empty);
-                }
+                DrawLine(pair.Item1, pair.Item2);
             }
         }
-        public event EventHandler ColorChanged;
-    }
 
-    public class Point
-    {
-        public int X;
-        public int Y;
-
-        public void SetCoordinates(int a, int b)
+        public void DrawLine(Point p1, Point p2)
         {
-            X = a;
-            Y = b;
+            MessageBox.Show("teste", "teste");
         }
     }
+    */
 
     public class Circle
     {     
-        public void Algorithm(int x_center, int y_center, int x_radius, int y_radius)
+        public void Algorithm(Point p1, Point p2)
         {
             int x = 0;
-            int radius = Radius(x_center, y_center, x_radius, y_radius);
+            int radius = Radius(p1.X, p1.Y, p2.X, p2.Y);
             int y = radius;
             int p = 3 - (2 * radius);
 
-            DrawCircle(x_center, y_center, x, y);
+            DrawCircle(p1.X, p1.Y, x, y);
 
             while (x < y)
             {
@@ -139,7 +125,7 @@ namespace WpfApplication
                     y--;
                     p += 4 * (x - y) + 10;
                 }
-                DrawCircle(x_center, y_center, x, y);
+                DrawCircle(p1.X, p1.Y, x, y);
             }
         }
 
@@ -175,14 +161,14 @@ namespace WpfApplication
     public class Bresenham
     {
         List<int> xn, yn;
-        Point p1, p2;
+        Point _p1, _p2;
         double m;
         bool tradeX, tradeY, tradeXY;
 
         public Bresenham()
         {
-            p1 = new Point();
-            p2 = new Point();
+            _p1 = new Point();
+            _p2 = new Point();
             xn = new List<int>();
             yn = new List<int>();
 
@@ -192,10 +178,10 @@ namespace WpfApplication
             tradeXY = false;
         }
 
-        public void Algorithm(int x1, int y1, int x2, int y2)
+        public void Algorithm(Point p1, Point p2)
         {
-            p1.SetCoordinates(x1, y1);
-            p2.SetCoordinates(x2, y2);
+            this._p1 = p1;
+            this._p2 = p2;
 
             Reflect();
 
@@ -206,6 +192,7 @@ namespace WpfApplication
             double dy = Math.Abs(p2.Y - p1.Y);
 
             m = dy / dx;
+
             double e = m - 1.0 / 2.0;
 
             SetPixels(x, y);
@@ -226,27 +213,28 @@ namespace WpfApplication
         }
         public void Reflect()
         {
-            float dx = (p2.X - p1.X);
-            float dy = (p2.Y - p1.Y);
+            float dx = (_p2.X - _p1.X);
+            float dy = (_p2.Y - _p1.Y);
 
             float m = dy / dx;
 
+
             if (m > 1 || m < -1)
             {
-                ExtensionMethods.Swap(ref p1.X, ref p1.Y);
-                ExtensionMethods.Swap(ref p2.X, ref p2.Y);
+                ExtensionMethods.Swap(_p1);
+                ExtensionMethods.Swap(_p2);
                 tradeXY = true;
             }
-            if(p1.X > p2.X)
+            if(_p1.X > _p2.X)
             {
-                p1.X = -p1.X;
-                p2.X = -p2.X;
+                _p1.X = -_p1.X;
+                _p2.X = -_p2.X;
                 tradeX = true;
             }
-            if(p1.Y > p2.Y)
+            if(_p1.Y > _p2.Y)
             {
-                p1.Y = -p1.Y;
-                p2.Y = -p2.Y;
+                _p1.Y = -_p1.Y;
+                _p2.Y = -_p2.Y;
                 tradeY = true;
             }
         }
@@ -286,7 +274,6 @@ namespace WpfApplication
             for(int i = 0; i < xn.Count(); i++)
             {
                 int index = windows.GetIndex(xn[i], yn[i]);
-                //MessageBox.Show("[" + xn[i].ToString() + "][" + yn[i].ToString() + "] ; Index = " + windows.GetIndex(xn[i], yn[i]).ToString());
                 windows._board[index].Color = "Red";
             }
         }
@@ -294,6 +281,11 @@ namespace WpfApplication
 
     public static class ExtensionMethods
     {
+        public static void Swap(Point a){
+            var temp = a.X;
+            a.X = a.Y;
+            a.Y = temp;
+        }
         public static void Swap<T>(ref T a, ref T b)
         {
             T temp = a;
@@ -306,5 +298,34 @@ namespace WpfApplication
             list1[index] = list2[index];
             list2[index] = temp;
         }
+    }
+
+    public class Point
+    {
+        private string _color;
+
+        public Point() { }
+        public Point(int x, int y)
+        {
+            X = x;
+            Y = y;
+        }
+
+        public int X { get; set; }
+        public int Y { get; set; }
+
+        public string Color
+        {
+            get { return _color; }
+            set
+            {
+                _color = value;
+                if (ColorChanged != null)
+                {
+                    ColorChanged(this, EventArgs.Empty);
+                }
+            }
+        }
+        public event EventHandler ColorChanged;
     }
 }
