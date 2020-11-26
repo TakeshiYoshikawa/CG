@@ -164,10 +164,10 @@ namespace WpfApplication
         }
         public void Reflect()
         {
-            int dx = (p2.X - p1.X);
-            int dy = (p2.Y - p1.Y);
+            float dx = (p2.X - p1.X);
+            float dy = (p2.Y - p1.Y);
 
-            int m = dy / dx;
+            float m = dy / dx;
 
             if (m > 1 || m < -1)
             {
