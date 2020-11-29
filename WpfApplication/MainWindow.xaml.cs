@@ -18,8 +18,8 @@ namespace WpfApplication
 {
     public partial class MainWindow : Window
     {
-        private int rows = 25;
-        private int columns = 25;
+        private int rows = 20;
+        private int columns = 20;
         public List<Point> _board;
         public List<Point> coordinates;
         
@@ -29,6 +29,7 @@ namespace WpfApplication
 
             _board = new List<Point>();
             coordinates = new List<Point>();
+
             for (int r = 0; r < rows; r++)
             {
                 for (int c = 0; c < columns; c++)
@@ -44,13 +45,13 @@ namespace WpfApplication
             var border = (Border)sender;
             var point = (Point)border.Tag;
             point.Color = "Red";
-
             coordinates.Add(point);
         }
 
-        public int GetIndex(int x, int y)
+        public void PutPixel(int x, int y, string color)
         {
-            return y + (x * rows);
+            int index = y + (x * rows);
+            _board[index].Color = color;
         }
         
         public void Line(object sender, RoutedEventArgs e)
@@ -67,8 +68,8 @@ namespace WpfApplication
         
         public void Polyline(object sender, RoutedEventArgs e)
         {
-            //var polylines = new Polyline();
-            //polylines.Algorithm();
+            var polylines = new Polyline();
+            polylines.Algorithm(coordinates);
         }
 
         public void RefreshUI(object sender, RoutedEventArgs e)
@@ -76,32 +77,34 @@ namespace WpfApplication
             coordinates.Clear();
             foreach (var i in _board)
             {
-                    i.Color = "White";
+                i.Color = "White";
             }
         }
     }
 
-    /*
-    public class Polilyne
+    
+    public class Polyline
     {
-        public void Algorithm(IEnumerable<Point> points)
+        Bresenham bresenham;
+
+        public Polyline()
         {
-            var endpoints = points.Skip(1).Concat(new[] { points.First() });
-            var pairs = points.Zip(endpoints, Tuple.Create);
-        
-            foreach(var pair in pairs)
+            bresenham = new Bresenham();
+        }
+        public void Algorithm(List<Point> points)
+        {
+            for(int i = 0; i < points.Count()-1; i++)
             {
-                DrawLine(pair.Item1, pair.Item2);
+                bresenham.Algorithm(points[i], points[i+1]);
             }
         }
 
         public void DrawLine(Point p1, Point p2)
         {
-            MessageBox.Show("teste", "teste");
+            bresenham.Algorithm(p1, p2);
         }
     }
-    */
-
+    
     public class Circle
     {     
         public void Algorithm(Point p1, Point p2)
@@ -145,8 +148,7 @@ namespace WpfApplication
         public void PutPixel(int x, int y, string color)
         {
             var windows = (MainWindow)Application.Current.MainWindow;
-            int index = windows.GetIndex(x, y);
-            windows._board[index].Color = color;
+            windows.PutPixel(x, y, "Red");
         }
 
         public int Radius(int x1, int y1, int x2, int y2)
@@ -160,122 +162,52 @@ namespace WpfApplication
 
     public class Bresenham
     {
-        List<int> xn, yn;
-        Point _p1, _p2;
-        double m;
-        bool tradeX, tradeY, tradeXY;
-
-        public Bresenham()
-        {
-            _p1 = new Point();
-            _p2 = new Point();
-            xn = new List<int>();
-            yn = new List<int>();
-
-            m = 0;
-            tradeX = false;
-            tradeY = false;
-            tradeXY = false;
-        }
-
         public void Algorithm(Point p1, Point p2)
         {
-            this._p1 = p1;
-            this._p2 = p2;
+            int x1 = p1.X; int y1 = p1.Y;
+            int x2 = p2.X; int y2 = p2.Y;
 
-            Reflect();
+            int w = x2 - x1;
+            int h = y2 - y1;
+            int dx1 = 0, dy1 = 0, dx2 = 0, dy2 = 0;
 
-            int x = p1.X;
-            int y = p1.Y;
+            if (w < 0) dx1 = -1; else if (w > 0) dx1 = 1;
+            if (h < 0) dy1 = -1; else if (h > 0) dy1 = 1;
+            if (w < 0) dx2 = -1; else if (w > 0) dx2 = 1;
 
-            double dx = Math.Abs(p2.X - p1.X);
-            double dy = Math.Abs(p2.Y - p1.Y);
+            int longest = Math.Abs(w);
+            int shortest = Math.Abs(h);
 
-            m = dy / dx;
-
-            double e = m - 1.0 / 2.0;
-
-            SetPixels(x, y);
-
-            while(x < p2.X)
+            if (!(longest > shortest))
             {
-                if(e > 0)
+                longest = Math.Abs(h);
+                shortest = Math.Abs(w);
+                if (h < 0) dy2 = -1; else if (h > 0) dy2 = 1;
+                dx2 = 0;
+            }
+            int numerator = longest >> 1;
+            for (int i = 0; i <= longest; i++)
+            {
+                DrawPoints(x1, y1);
+                numerator += shortest;
+                if (!(numerator < longest))
                 {
-                    y++;
-                    e--;
+                    numerator -= longest;
+                    x1 += dx1;
+                    y1 += dy1;
                 }
-                x++;
-                e += m;
-                SetPixels(x, y);
-            }
-            Deflect();
-            DrawPoints();
-        }
-        public void Reflect()
-        {
-            float dx = (_p2.X - _p1.X);
-            float dy = (_p2.Y - _p1.Y);
-
-            float m = dy / dx;
-
-
-            if (m > 1 || m < -1)
-            {
-                ExtensionMethods.Swap(_p1);
-                ExtensionMethods.Swap(_p2);
-                tradeXY = true;
-            }
-            if(_p1.X > _p2.X)
-            {
-                _p1.X = -_p1.X;
-                _p2.X = -_p2.X;
-                tradeX = true;
-            }
-            if(_p1.Y > _p2.Y)
-            {
-                _p1.Y = -_p1.Y;
-                _p2.Y = -_p2.Y;
-                tradeY = true;
-            }
-        }
-        public void Deflect()
-        {
-            if (tradeY == true)
-            {
-                for (int i = 0; i < yn.Count(); i++)
+                else
                 {
-                    yn[i] = -yn[i];
+                    x1 += dx2;
+                    y1 += dy2;
                 }
             }
-            if (tradeX == true)
-            {
-                for (int i = 0; i < xn.Count(); i++)
-                {                    
-                    xn[i] = -xn[i];
-                }
-            }
-            if (tradeXY == true)
-            {
-                for (int i = 0; i < xn.Count(); i++)
-                {
-                    ExtensionMethods.Swap(xn, yn, i);
-                }
-            }
-        }
-        public void SetPixels(int x, int y)
-        {
-            xn.Add(x);
-            yn.Add(y);
         }
 
-        public void DrawPoints()
+        public void DrawPoints(int x, int y)
         {
-            var windows = (MainWindow)Application.Current.MainWindow;
-            for(int i = 0; i < xn.Count(); i++)
-            {
-                int index = windows.GetIndex(xn[i], yn[i]);
-                windows._board[index].Color = "Red";
-            }
+            var windows = (MainWindow)Application.Current.MainWindow;       
+            windows.PutPixel(x, y, "Red");
         }
     }
 
@@ -299,7 +231,6 @@ namespace WpfApplication
             list2[index] = temp;
         }
     }
-
     public class Point
     {
         private string _color;

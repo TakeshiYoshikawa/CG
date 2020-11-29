@@ -34,7 +34,7 @@
         </StackPanel>
 
         <Grid fw:PointerTracker.Enabled="True" Background="#01FFFFFF">
-            <ItemsControl Name="Board" x:FieldModifier="public">
+            <ItemsControl Name="Board">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <UniformGrid Margin="118,0,-942,0">
@@ -48,7 +48,7 @@
                             BorderBrush="Black" 
                             BorderThickness="1" 
                             MouseDown="CellClick" 
-                            Margin="2" 
+                            Margin="0.5" 
                             Tag="{Binding}">
                         </Border>
                     </DataTemplate>
