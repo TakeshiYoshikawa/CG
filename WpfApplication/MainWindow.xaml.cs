@@ -22,7 +22,7 @@ namespace WpfApplication
         private int columns = 20;
         public List<Point> _board;
         public List<Point> coordinates;
-        
+
         public MainWindow()
         {
             InitializeComponent();
@@ -44,16 +44,25 @@ namespace WpfApplication
         {
             var border = (Border)sender;
             var point = (Point)border.Tag;
-            point.Color = "Red";
+            point.Color = "Black";
             coordinates.Add(point);
         }
 
         public void PutPixel(int x, int y, string color)
         {
-            int index = y + (x * rows);
+            int index = GetIndex(x, y) ;
             _board[index].Color = color;
         }
-        
+
+        public int GetIndex(int x, int y)
+        {
+            return y + (x * rows);
+        }
+
+        public Point GetPoint(int x, int y)
+        {
+            return _board[GetIndex(x, y)];
+        }
         public void Line(object sender, RoutedEventArgs e)
         {
             var bresenham = new Bresenham();
@@ -65,12 +74,19 @@ namespace WpfApplication
             var circle = new Circle();
             circle.Algorithm(coordinates[0], coordinates[1]);
         }
-        
+
         public void Polyline(object sender, RoutedEventArgs e)
         {
             var polylines = new Polyline();
             polylines.Algorithm(coordinates);
         }
+
+        public void Fill(object sender, RoutedEventArgs e)
+        {
+            var flood = new FloodFill();
+            flood.Algorithm(coordinates.Last().X, coordinates.Last().Y, "Blue", "Red");
+        }
+
 
         public void RefreshUI(object sender, RoutedEventArgs e)
         {
@@ -82,7 +98,23 @@ namespace WpfApplication
         }
     }
 
-    
+    public class FloodFill
+    {
+        public void Algorithm(int x, int y, string color, string edgeColor)
+        {
+            var windows = (MainWindow)Application.Current.MainWindow;
+            var current = windows.GetPoint(x,y) ;
+            if(current.Color != edgeColor && current.Color != color)
+            {
+                windows.PutPixel(x, y, color);
+                Algorithm(x + 1, y, color, edgeColor);
+                Algorithm(x, y + 1, color, edgeColor);
+                Algorithm(x - 1, y, color, edgeColor);
+                Algorithm(x, y - 1, color, edgeColor);
+            }
+        }
+    }
+
     public class Polyline
     {
         Bresenham bresenham;
