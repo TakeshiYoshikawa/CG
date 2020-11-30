@@ -1,18 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using WpfApplication.ViewModels;
 
 namespace WpfApplication
 {
@@ -50,7 +41,7 @@ namespace WpfApplication
 
         public void PutPixel(int x, int y, string color)
         {
-            int index = GetIndex(x, y) ;
+            int index = GetIndex(x, y);
             _board[index].Color = color;
         }
 
@@ -93,14 +84,74 @@ namespace WpfApplication
             flood.Algorithm(coordinates.Last().X, coordinates.Last().Y, "Blue", "Red");
         }
 
+        public void Translation(object sender, RoutedEventArgs e)
+        {
+            ClearBoard();
+            var trans = new Translation(coordinates, -3, -3);
+            trans.Draw();
+        }
 
+        public void ClearBoard()
+        {
+            foreach (var i in _board)
+                i.Color = "White";
+        }
         public void RefreshUI(object sender, RoutedEventArgs e)
         {
             coordinates.Clear();
             foreach (var i in _board)
-            {
                 i.Color = "White";
+        }
+    }
+
+    public class Translation
+    {
+        public int[,] matrix;
+        public List<Point> originalCoordinates;
+        public Translation(List<Point> p, int tx, int ty)
+        {
+            originalCoordinates = p;
+            matrix = new int[,] { { 1, 0, tx }, { 0, 1, ty }, { 0, 0, 1 } };
+        }
+
+        public Point MultiplyVectorByMatrix(Point point, int[,] matrix)
+        {
+            var result = new List<int>() { 0, 0, 1 };
+            var vector = new List<int>
+            {
+                point.X,
+                point.Y,
+                point.H
+            };
+
+            for (int i = 0; i < 3; i++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    result[i] += matrix[i, j] * vector[j];
+                }
             }
+
+            var translatedPoint = new Point
+            {
+                X = result[0],
+                Y = result[1]
+            };
+
+            return translatedPoint;
+        }
+
+        public void Draw()
+        {
+            var result = new List<Point>();
+
+            foreach (var p in originalCoordinates)
+            {
+                result.Add(MultiplyVectorByMatrix(p, matrix));
+            }
+
+            var figure = new Polyline();
+            figure.Algorithm(result);
         }
     }
 
@@ -123,9 +174,9 @@ namespace WpfApplication
             {
                 for (int i = 0; i <= n - r; i++)
                 {
-                    pts[i] = pts[i].sum(
-                        pts[i].dot((1 - t), pts[i]),
-                        pts[i].dot(t, pts[i + 1])
+                    pts[i] = pts[i].Sum(
+                        pts[i].Dot((1 - t), pts[i]),
+                        pts[i].Dot(t, pts[i + 1])
                     );
                 }
             }
@@ -134,7 +185,7 @@ namespace WpfApplication
 
         public void DrawCurve()
         {
-            var windows = (MainWindow)Application.Current.MainWindow;
+            _ = (MainWindow)Application.Current.MainWindow;
             line = new Bresenham();
             Point initialPoint = pts[0];
 
@@ -152,8 +203,8 @@ namespace WpfApplication
         public void Algorithm(int x, int y, string color, string edgeColor)
         {
             var windows = (MainWindow)Application.Current.MainWindow;
-            var current = windows.GetPoint(x,y) ;
-            if(current.Color != edgeColor && current.Color != color)
+            var current = windows.GetPoint(x, y);
+            if (current.Color != edgeColor && current.Color != color)
             {
                 windows.PutPixel(x, y, color);
                 Algorithm(x + 1, y, color, edgeColor);
@@ -174,70 +225,15 @@ namespace WpfApplication
         }
         public void Algorithm(List<Point> points)
         {
-            for(int i = 0; i < points.Count()-1; i++)
+            for (int i = 0; i < points.Count() - 1; i++)
             {
-                bresenham.Algorithm(points[i], points[i+1]);
+                bresenham.Algorithm(points[i], points[i + 1]);
             }
         }
 
         public void DrawLine(Point p1, Point p2)
         {
             bresenham.Algorithm(p1, p2);
-        }
-    }
-    
-    public class Circle
-    {     
-        public void Algorithm(Point p1, Point p2)
-        {
-            int x = 0;
-            int radius = Radius(p1.X, p1.Y, p2.X, p2.Y);
-            int y = radius;
-            int p = 3 - (2 * radius);
-
-            DrawCircle(p1.X, p1.Y, x, y);
-
-            while (x < y)
-            {
-                x++;
-                if(p < 0)
-                {
-                    p += (4 * x) + 6;
-                }
-                else
-                {
-                    y--;
-                    p += 4 * (x - y) + 10;
-                }
-                DrawCircle(p1.X, p1.Y, x, y);
-            }
-        }
-
-        public void DrawCircle(int xc, int yc, int x, int y)
-        {
-            PutPixel(xc + x, yc + y, "Red");
-            PutPixel(xc - x, yc + y, "Red");
-            PutPixel(xc + x, yc - y, "Red");
-            PutPixel(xc - x, yc - y, "Red");
-
-            PutPixel(xc + y, yc + x, "Red");
-            PutPixel(xc - y, yc + x, "Red");
-            PutPixel(xc + y, yc - x, "Red");
-            PutPixel(xc - y, yc - x, "Red");
-        }
-
-        public void PutPixel(int x, int y, string color)
-        {
-            var windows = (MainWindow)Application.Current.MainWindow;
-            windows.PutPixel(x, y, "Red");
-        }
-
-        public int Radius(int x1, int y1, int x2, int y2)
-        {
-            int dx = Math.Abs(x2 - x1);
-            int dy = Math.Abs(y2 - y1);
-
-            return Math.Max(dx, dy);
         }
     }
 
@@ -287,14 +283,70 @@ namespace WpfApplication
 
         public void DrawPoints(int x, int y)
         {
-            var windows = (MainWindow)Application.Current.MainWindow;       
+            var windows = (MainWindow)Application.Current.MainWindow;
             windows.PutPixel(x, y, "Red");
+        }
+    }
+
+    public class Circle
+    {
+        public void Algorithm(Point p1, Point p2)
+        {
+            int x = 0;
+            int radius = Radius(p1.X, p1.Y, p2.X, p2.Y);
+            int y = radius;
+            int p = 3 - (2 * radius);
+
+            DrawCircle(p1.X, p1.Y, x, y);
+
+            while (x < y)
+            {
+                x++;
+                if (p < 0)
+                {
+                    p += (4 * x) + 6;
+                }
+                else
+                {
+                    y--;
+                    p += 4 * (x - y) + 10;
+                }
+                DrawCircle(p1.X, p1.Y, x, y);
+            }
+        }
+
+        public void DrawCircle(int xc, int yc, int x, int y)
+        {
+            PutPixel(xc + x, yc + y, "Red");
+            PutPixel(xc - x, yc + y, "Red");
+            PutPixel(xc + x, yc - y, "Red");
+            PutPixel(xc - x, yc - y, "Red");
+
+            PutPixel(xc + y, yc + x, "Red");
+            PutPixel(xc - y, yc + x, "Red");
+            PutPixel(xc + y, yc - x, "Red");
+            PutPixel(xc - y, yc - x, "Red");
+        }
+
+        public void PutPixel(int x, int y, string color)
+        {
+            var windows = (MainWindow)Application.Current.MainWindow;
+            windows.PutPixel(x, y, "Red");
+        }
+
+        public int Radius(int x1, int y1, int x2, int y2)
+        {
+            int dx = Math.Abs(x2 - x1);
+            int dy = Math.Abs(y2 - y1);
+
+            return Math.Max(dx, dy);
         }
     }
 
     public static class ExtensionMethods
     {
-        public static void Swap(Point a){
+        public static void Swap(Point a)
+        {
             var temp = a.X;
             a.X = a.Y;
             a.Y = temp;
@@ -312,6 +364,7 @@ namespace WpfApplication
             list2[index] = temp;
         }
     }
+
     public class Point
     {
         private string _color;
@@ -321,24 +374,30 @@ namespace WpfApplication
         {
             X = x;
             Y = y;
+            H = 1;
         }
 
         public int X { get; set; }
         public int Y { get; set; }
+        public int H { get; set; }
 
-        public Point dot(double t, Point p)
+        public Point Dot(double t, Point p)
         {
-            var result = new Point();
-            result.X = Convert.ToInt32(p.X * t);
-            result.Y = Convert.ToInt32(p.Y * t);
+            var result = new Point
+            {
+                X = Convert.ToInt32(p.X * t),
+                Y = Convert.ToInt32(p.Y * t)
+            };
             return result;
         }
 
-        public Point sum(Point p1, Point p2)
+        public Point Sum(Point p1, Point p2)
         {
-            var result = new Point();
-            result.X = p1.X + p2.X;
-            result.Y = p1.Y + p2.Y;
+            var result = new Point
+            {
+                X = p1.X + p2.X,
+                Y = p1.Y + p2.Y
+            };
 
             return result;
         }
