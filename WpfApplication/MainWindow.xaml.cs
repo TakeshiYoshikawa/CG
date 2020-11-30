@@ -75,6 +75,12 @@ namespace WpfApplication
             circle.Algorithm(coordinates[0], coordinates[1]);
         }
 
+        public void Curve(object sender, RoutedEventArgs e)
+        {
+            var curve = new Curve(coordinates);
+            curve.DrawCurve();
+        }
+
         public void Polyline(object sender, RoutedEventArgs e)
         {
             var polylines = new Polyline();
@@ -94,6 +100,49 @@ namespace WpfApplication
             foreach (var i in _board)
             {
                 i.Color = "White";
+            }
+        }
+    }
+
+    public class Curve
+    {
+        public List<Point> pts;
+        public Bresenham line;
+
+        public Curve(List<Point> ControlPts)
+        {
+            pts = new List<Point>();
+            pts = ControlPts;
+        }
+
+        public Point Algorithm(double t)
+        {
+            int n = pts.Count() - 1;
+
+            for (int r = 1; r <= n; r++)
+            {
+                for (int i = 0; i <= n - r; i++)
+                {
+                    pts[i] = pts[i].sum(
+                        pts[i].dot((1 - t), pts[i]),
+                        pts[i].dot(t, pts[i + 1])
+                    );
+                }
+            }
+            return pts[0];
+        }
+
+        public void DrawCurve()
+        {
+            var windows = (MainWindow)Application.Current.MainWindow;
+            line = new Bresenham();
+            Point initialPoint = pts[0];
+
+            for (double t = 0; t <= 1; t += 0.5)
+            {
+                Point finalPoint = Algorithm(t);
+                line.Algorithm(initialPoint, finalPoint);
+                initialPoint = finalPoint;
             }
         }
     }
@@ -276,6 +325,23 @@ namespace WpfApplication
 
         public int X { get; set; }
         public int Y { get; set; }
+
+        public Point dot(double t, Point p)
+        {
+            var result = new Point();
+            result.X = Convert.ToInt32(p.X * t);
+            result.Y = Convert.ToInt32(p.Y * t);
+            return result;
+        }
+
+        public Point sum(Point p1, Point p2)
+        {
+            var result = new Point();
+            result.X = p1.X + p2.X;
+            result.Y = p1.Y + p2.Y;
+
+            return result;
+        }
 
         public string Color
         {
