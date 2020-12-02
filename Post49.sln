@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30611.23
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfApplication", "WpfApplication\WpfApplication.csproj", "{73440361-7C9F-4E02-BE0C-642841EECBDB}"
 EndProject
@@ -19,13 +19,7 @@ Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 2
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://ireznykov.visualstudio.com/
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = WpfApplication\\WpfApplication.csproj
-		SccProjectName1 = WpfApplication
-		SccLocalPath1 = WpfApplication
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5CFF80B2-AE6B-45C2-987E-C8A939EC4234}
 	EndGlobalSection
 EndGlobal

@@ -28,7 +28,7 @@
             <Button Content="Recorte de Linha" HorizontalAlignment="Left" Margin="5,5,0,5" Width="100" Height="32"/>
             <Button Content="Polilinhas" HorizontalAlignment="Left" Margin="5,5,0,5" Width="100" Height="32" Click="Polyline"/>
             <Button Content="Translação" HorizontalAlignment="Left" Margin="5,5,0,5" Width="100" Height="32" Click="Translation"/>
-            <Button Content="Rotação" HorizontalAlignment="Left" Margin="5,5,0,5" Width="100" Height="32"/>
+            <Button Content="Rotação" HorizontalAlignment="Left" Margin="5,5,0,5" Width="100" Height="32" Click="Rotation"/>
             <Button Content="Escala" HorizontalAlignment="Left" Margin="5,5,0,5" Width="100" Height="32"/>
             <Button Content="Projeções Orto" HorizontalAlignment="Left" Margin="5,5,0,5" Width="100" Height="32"/>
             <Button Content="Perspectiva" HorizontalAlignment="Left" Margin="5,5,0,5" Width="100" Height="32"/>
@@ -48,9 +48,9 @@
                     <DataTemplate>
                         <Border Background="{Binding Path=Color}" 
                             BorderBrush="Black" 
-                            BorderThickness="1" 
+                            BorderThickness="0.5" 
                             MouseDown="CellClick" 
-                            Margin="0.5" 
+                            Margin="0.01" 
                             Tag="{Binding}">
                         </Border>
                     </DataTemplate>

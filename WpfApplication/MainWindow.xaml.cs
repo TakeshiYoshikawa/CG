@@ -9,8 +9,8 @@ namespace WpfApplication
 {
     public partial class MainWindow : Window
     {
-        private int rows = 20;
-        private int columns = 20;
+        private int rows = 30;
+        private int columns = 30;
         public List<Point> _board;
         public List<Point> coordinates;
 
@@ -91,6 +91,12 @@ namespace WpfApplication
             trans.Draw();
         }
 
+        public void Rotation(object sender, RoutedEventArgs e)
+        {
+            ClearBoard();
+            new Rotation(coordinates, coordinates[0], 90).Draw();
+        }
+
         public void ClearBoard()
         {
             foreach (var i in _board)
@@ -104,20 +110,83 @@ namespace WpfApplication
         }
     }
 
+    public class Rotation
+    {
+        public double[,] matrix;
+        public List<Point> originalCoordinates;
+        public List<Point> rotatedCoordinates;
+        public Point pivot;
+
+        public Rotation(List<Point> coordinates, Point p, int angle)
+        {
+            double d = ExtensionMethods.GetAngle(angle);
+            matrix = new double[,] { { Math.Cos(d), -Math.Sin(d), 0 }, { Math.Sin(d), Math.Cos(d), 0 }, { 0, 0, 1 } };
+            originalCoordinates = new List<Point>(coordinates);
+            rotatedCoordinates = new List<Point>();
+
+            pivot = new Point { X = p.X, Y = p.Y };
+
+            //Do translation
+            for (int i = 0; i < originalCoordinates.Count(); i++)
+            {
+                originalCoordinates[i].X -= pivot.X;
+                originalCoordinates[i].Y -= pivot.Y;
+            }
+        }
+        public Point ApplyRotationMatrix(Point point, double[,] matrix)
+        {
+            List<double> result = new List<double>() { 0, 0, 1 };
+            List<int> vector = new List<int> { point.X, point.Y, point.H };
+            List<int> _pivot = new List<int> { pivot.X, pivot.Y, pivot.H };
+
+            for (int i = 0; i < 3; i++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    result[i] += matrix[i, j] * vector[j];
+                }
+                // Undo translation.
+                result[i] += _pivot[i];
+            }
+
+            Point RotatedPoint = new Point
+            {
+                X = Convert.ToInt32(result[0]),
+                Y = Convert.ToInt32(result[1])
+            };
+
+            return RotatedPoint;
+        }
+
+        public void Draw()
+        {
+            foreach (Point p in originalCoordinates)
+            {
+                rotatedCoordinates.Add(ApplyRotationMatrix(p, matrix));
+            }
+            var figure = new Polyline();
+            figure.Algorithm(rotatedCoordinates);
+        }
+
+        ~Rotation() { }
+    }
+
     public class Translation
     {
         public int[,] matrix;
         public List<Point> originalCoordinates;
+        public List<Point> finalPoints;
         public Translation(List<Point> p, int tx, int ty)
         {
+            finalPoints = new List<Point>();
             originalCoordinates = p;
             matrix = new int[,] { { 1, 0, tx }, { 0, 1, ty }, { 0, 0, 1 } };
         }
 
-        public Point MultiplyVectorByMatrix(Point point, int[,] matrix)
+        public Point ApplyTranslationMatrix(Point point, int[,] matrix)
         {
-            var result = new List<int>() { 0, 0, 1 };
-            var vector = new List<int>
+            List<int> result = new List<int>() { 0, 0, 1 };
+            List<int> vector = new List<int>
             {
                 point.X,
                 point.Y,
@@ -132,7 +201,7 @@ namespace WpfApplication
                 }
             }
 
-            var translatedPoint = new Point
+            Point translatedPoint = new Point
             {
                 X = result[0],
                 Y = result[1]
@@ -141,17 +210,19 @@ namespace WpfApplication
             return translatedPoint;
         }
 
+        public List<Point> GetTranslatedPoints()
+        {
+            foreach(Point p in originalCoordinates)
+            {
+                finalPoints.Add(ApplyTranslationMatrix(p, matrix));
+            }
+            return finalPoints;
+        }
+
         public void Draw()
         {
-            var result = new List<Point>();
-
-            foreach (var p in originalCoordinates)
-            {
-                result.Add(MultiplyVectorByMatrix(p, matrix));
-            }
-
             var figure = new Polyline();
-            figure.Algorithm(result);
+            figure.Algorithm(GetTranslatedPoints());
         }
     }
 
@@ -225,9 +296,9 @@ namespace WpfApplication
         }
         public void Algorithm(List<Point> points)
         {
-            for (int i = 0; i < points.Count() - 1; i++)
+            for (int i = 0; i < points.Count(); i++)
             {
-                bresenham.Algorithm(points[i], points[i + 1]);
+                bresenham.Algorithm(points[i % points.Count()], points[(i + 1) % points.Count()]);
             }
         }
 
@@ -362,6 +433,11 @@ namespace WpfApplication
             T temp = list1[index];
             list1[index] = list2[index];
             list2[index] = temp;
+        }
+
+        public static double GetAngle(int degree)
+        {
+            return (Math.PI * degree / 180.0);
         }
     }
 
