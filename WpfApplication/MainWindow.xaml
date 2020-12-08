@@ -24,7 +24,7 @@
             <Button Content="Círculos" HorizontalAlignment="Left" Margin="5,5,0,5" Width="100" Height="32" Click="Circle"/>
             <Button Content="Curvas" HorizontalAlignment="Left" Margin="5,5,0,5" Width="100" Height="32" Click="Curve"/>
             <Button Content="Preenchimento" HorizontalAlignment="Left" Margin="5,5,0,5" Width="100" Height="32" Click="Fill"/>
-            <Button Content="Scanline" HorizontalAlignment="Left" Margin="5,5,0,5" Width="100" Height="32"/>
+            <Button Content="Scanline" HorizontalAlignment="Left" Margin="5,5,0,5" Width="100" Height="32" Click="Scanline"/>
             <Button Content="Recorte de Linha" HorizontalAlignment="Left" Margin="5,5,0,5" Width="100" Height="32"/>
             <Button Content="Polilinhas" HorizontalAlignment="Left" Margin="5,5,0,5" Width="100" Height="32" Click="Polyline"/>
             <Button Content="Translação" HorizontalAlignment="Left" Margin="5,5,0,5" Width="100" Height="32" Click="Translation"/>
