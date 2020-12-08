@@ -7,9 +7,12 @@ at CG classes.
 * Circle
 * Fill
 * Scanline
-* Trim
+* Trim Line (Cohen Sutherland)
+* Trim Polygon (Sutherland-Hodgman)
 * Polyline
-* Transformations
+* Translation
+* Rotation
+* Scale
 * Orthogonal Projection
 * Perspective
 
