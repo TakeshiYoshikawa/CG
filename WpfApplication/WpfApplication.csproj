@@ -70,15 +70,29 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Classes\Bresenham.cs" />
+    <Compile Include="Classes\Circle.cs" />
+    <Compile Include="Classes\CohenSutherland.cs" />
     <Compile Include="Converters\BaseGenericConverter.cs" />
     <Compile Include="Converters\ColorToBrushConverter.cs" />
     <Compile Include="Converters\DecreaseDoubleConverter.cs" />
     <Compile Include="Converters\DivideDoubleConverter.cs" />
     <Compile Include="Converters\OperationGenericConverter.cs" />
     <Compile Include="Converters\ValueGenericConverter.cs" />
+    <Compile Include="Classes\CriticalP.cs" />
+    <Compile Include="Classes\CriticalPIntersectionFirst.cs" />
+    <Compile Include="Classes\Curve.cs" />
+    <Compile Include="Classes\ExtensionMethods.cs" />
+    <Compile Include="Classes\FloodFill.cs" />
     <Compile Include="Models\Cell.cs" />
     <Compile Include="Models\DelegateCommand.cs" />
     <Compile Include="Models\ICell.cs" />
+    <Compile Include="Classes\Point.cs" />
+    <Compile Include="Classes\Scale.cs" />
+    <Compile Include="Classes\Polyline.cs" />
+    <Compile Include="Classes\Rotation.cs" />
+    <Compile Include="Classes\Scanline.cs" />
+    <Compile Include="Classes\Translation.cs" />
     <Compile Include="ViewModels\CellViewModel.cs" />
     <Compile Include="ViewModels\DesignCellViewModel.cs" />
     <Compile Include="ViewModels\DynamicGridViewModel.cs" />
