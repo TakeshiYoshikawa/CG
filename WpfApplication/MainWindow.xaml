@@ -27,7 +27,7 @@
             <Button Content="Scanline" HorizontalAlignment="Left" Margin="5,5,0,5" Width="100" Height="32" Click="Scanline"/>
             <Button Content="Trim Windows" HorizontalAlignment="Left" Margin="5,5,0,5" Width="100" Height="32" Click="TrimSubwindows"/>
             <Button Content="Trim Line" HorizontalAlignment="Left" Margin="5,5,0,5" Width="100" Height="32" Click="LineTrim"/>
-            <Button Content="Trim Polygon" HorizontalAlignment="Left" Margin="5,5,0,5" Width="100" Height="32" />
+            <Button Content="Trim Polygon" HorizontalAlignment="Left" Margin="5,5,0,5" Width="100" Height="32" Click="PolygonTrim"/>
             <Button Content="Polyline" HorizontalAlignment="Left" Margin="5,5,0,5" Width="100" Height="32" Click="Polyline"/>
             <Button Content="Translation" HorizontalAlignment="Left" Margin="5,5,0,5" Width="100" Height="32" Click="Translation"/>
             <Button Content="Rotation" HorizontalAlignment="Left" Margin="5,5,0,5" Width="100" Height="32" Click="Rotation"/>

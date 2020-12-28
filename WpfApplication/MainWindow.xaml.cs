@@ -103,7 +103,15 @@ namespace WpfApplication
         {
             var rect = new RectangleF(5, 5, 20, 20);
             var newLine = CohenSutherland.ClipSegment(rect, coordinates[0], coordinates[1]);
+            ClearBoard();
             new Bresenham().Algorithm(newLine.Item1, newLine.Item2, "Red");
+        }
+
+        public void PolygonTrim(object sender, RoutedEventArgs e)
+        {
+            var rect = new Rectangle(5, 5, 20, 20);
+            var newPolygon = new SutherlandHodgman().TrimPolygon(rect, coordinates);
+            new Polyline().Algorithm(newPolygon, "Red");
         }
 
         public void Translation(object sender, RoutedEventArgs e)
