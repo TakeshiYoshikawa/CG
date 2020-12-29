@@ -109,9 +109,8 @@ namespace WpfApplication
 
         public void PolygonTrim(object sender, RoutedEventArgs e)
         {
-            var rect = new Rectangle(5, 5, 20, 20);
-            var newPolygon = new SutherlandHodgman().TrimPolygon(rect, coordinates);
-            new Polyline().Algorithm(newPolygon, "Red");
+            var rect = new Rectangle(6, 6, 19, 19);
+            new SutherlandHodgman().TrimPolygon(rect, coordinates);
         }
 
         public void Translation(object sender, RoutedEventArgs e)
