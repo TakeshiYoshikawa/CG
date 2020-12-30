@@ -3,30 +3,40 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WpfApplication"
-        xmlns:views="clr-namespace:WpfApplication.Views"
         mc:Ignorable="d"
         Title="Computer Graphics"
         MinHeight="200" MinWidth="300"
-        Height="662" Width="1000"
+        Height="650" Width="800"
         xmlns:fw="clr-namespace:SourceChord.FluentWPF;assembly=FluentWPF"
-        KeyDown="ClearUI"
+        KeyDown="Utilities" 
         fw:AcrylicWindow.Enabled="True">
 
     <Grid fw:PointerTracker.Enabled="True" Background="#01FFFFFF">
-
+        <!--
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" MinWidth="50"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
+        -->
+        <DockPanel>
+            <Menu DockPanel.Dock="Top" Margin="0,0,0,600">
+                <MenuItem Header="_About">
+                    <MenuItem Header="_Instructions" Click="KeyInfo"/>
+                </MenuItem>
+                <!--
+                <MenuItem Header="_Tools">
+                    <MenuItem Header="_Show groups" IsCheckable="True" IsChecked="True" />
+                </MenuItem>
+                -->
+            </Menu>
+        </DockPanel>
 
-        <StackPanel Grid.ColumnSpan="3">
+        <StackPanel Grid.ColumnSpan="3" Margin="0,20,0,0">
             <Button Content="Line" HorizontalAlignment="Left" Margin="5,5,0,5" Width="100" Height="32" Click="Line"/>
             <Button Content="Circle" HorizontalAlignment="Left" Margin="5,5,0,5" Width="100" Height="32" Click="Circle"/>
             <Button Content="Curve" HorizontalAlignment="Left" Margin="5,5,0,5" Width="100" Height="32" Click="Curve"/>
             <Button Content="Fill" HorizontalAlignment="Left" Margin="5,5,0,5" Width="100" Height="32" Click="Fill"/>
             <Button Content="Scanline" HorizontalAlignment="Left" Margin="5,5,0,5" Width="100" Height="32" Click="Scanline"/>
-            <Button Content="Trim Windows" HorizontalAlignment="Left" Margin="5,5,0,5" Width="100" Height="32" Click="TrimSubwindows"/>
             <Button Content="Trim Line" HorizontalAlignment="Left" Margin="5,5,0,5" Width="100" Height="32" Click="LineTrim"/>
             <Button Content="Trim Polygon" HorizontalAlignment="Left" Margin="5,5,0,5" Width="100" Height="32" Click="PolygonTrim"/>
             <Button Content="Polyline" HorizontalAlignment="Left" Margin="5,5,0,5" Width="100" Height="32" Click="Polyline"/>
@@ -37,11 +47,11 @@
             <Button Content="Perspective" HorizontalAlignment="Left" Margin="5,5,0,5" Width="100" Height="32"/>
         </StackPanel>
 
-        <Grid fw:PointerTracker.Enabled="True" Background="#01FFFFFF">
-            <ItemsControl Name="Board">
+        <Grid fw:PointerTracker.Enabled="True">
+            <ItemsControl Name="Board" Margin="0,20,0,0">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <UniformGrid Margin="118,0,-942,0">
+                        <UniformGrid Margin="118,0,0,0">
                         </UniformGrid>
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
@@ -58,9 +68,6 @@
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
-        </Grid>
-
-        <Grid Grid.Column="0">
         </Grid>
     </Grid>
 </Window>
