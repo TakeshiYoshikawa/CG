@@ -44,9 +44,8 @@ namespace WpfApplication
                 }
             }
 
-            for (int i = 0; i < outputList.Count(); i++) {
-                new Bresenham().Algorithm(outputList[i], outputList[(i + 1) % outputList.Count()], "Green");
-            }
+            new Polyline().Algorithm(subjectPolygon, "LightGray");
+            new Polyline().Algorithm(outputList, "Green");
         }
 
         public bool IsInside(Tuple<Point, Point, string> edge, Point p)
