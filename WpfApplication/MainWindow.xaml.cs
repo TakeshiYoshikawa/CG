@@ -39,6 +39,17 @@ namespace WpfApplication
             coordinates.Add(point);
         }
 
+        public void ClearUI(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.C)
+            {
+                coordinates.Clear();
+
+                foreach (var i in _board)
+                    i.Color = "White";
+            }
+        }
+
         public void PutPixel(int x, int y, string color)
         {
             int index = GetIndex(x, y);
@@ -134,12 +145,6 @@ namespace WpfApplication
 
         public void ClearBoard()
         {
-            foreach (var i in _board)
-                i.Color = "White";
-        }
-        public void RefreshUI(object sender, RoutedEventArgs e)
-        {
-            coordinates.Clear();
             foreach (var i in _board)
                 i.Color = "White";
         }
