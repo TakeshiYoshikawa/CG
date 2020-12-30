@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Drawing;
 
 namespace WpfApplication
 {
@@ -109,7 +109,7 @@ namespace WpfApplication
 
         public void PolygonTrim(object sender, RoutedEventArgs e)
         {
-            var rect = new Rectangle(6, 6, 19, 19);
+            var rect = new Rectangle(6, 6, 18, 18);
             new SutherlandHodgman().TrimPolygon(rect, coordinates);
         }
 

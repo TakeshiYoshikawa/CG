@@ -9,15 +9,16 @@ namespace WpfApplication
         public double[,] matrix;
         public List<Point> originalCoordinates;
         public Point setPoint;
-        
+
         public Scale(List<Point> coordinates, Point p, int scaleX, int scaleY)
         {
             matrix = new double[,] { { scaleX, 0, 0 }, { 0, scaleY, 0 }, { 0, 0, 1 } };
             originalCoordinates = new List<Point>(coordinates);
-            
-            setPoint = new Point { 
-                X = p.X, 
-                Y = p.Y 
+
+            setPoint = new Point
+            {
+                X = p.X,
+                Y = p.Y
             };
 
             //Do translation
@@ -27,7 +28,7 @@ namespace WpfApplication
                 originalCoordinates[i].Y -= setPoint.Y;
             }
         }
-        
+
         public Point ApplyScalationMatrix(Point point, double[,] matrix)
         {
             List<double> result = new List<double>() { 0, 0, 1 };
@@ -52,9 +53,9 @@ namespace WpfApplication
 
             return RotatedPoint;
         }
-        
+
         public void Draw()
-        {        
+        {
             List<Point> scaledCoordinates = new List<Point>();
             foreach (Point p in originalCoordinates)
             {
