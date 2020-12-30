@@ -39,14 +39,33 @@ namespace WpfApplication
             coordinates.Add(point);
         }
 
-        public void ClearUI(object sender, KeyEventArgs e)
+        public void KeyInfo(object sender, RoutedEventArgs e)
         {
-            if (e.Key == Key.C)
+            MessageBox.Show(
+                "[F1] - Clear Board\n" + 
+                "[F2] - Clip Window", 
+                "Instructions"
+            );
+        }
+
+        public void Utilities(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.F1)
             {
                 coordinates.Clear();
 
                 foreach (var i in _board)
                     i.Color = "White";
+            }
+            else if (e.Key == Key.F2)
+            {
+                List<Point> trimBorder = new List<Point>() {
+                    new Point(5,5),
+                    new Point(5,25),
+                    new Point(25,25),
+                    new Point(25,5)
+                };
+                new Polyline().Algorithm(trimBorder, "Red");
             }
         }
 
@@ -97,17 +116,6 @@ namespace WpfApplication
         public void Scanline(object sender, RoutedEventArgs e)
         {
             new Scanline().Sweep(coordinates);
-        }
-
-        public void TrimSubwindows(object sender, RoutedEventArgs e)
-        {
-            List<Point> trimBorder = new List<Point>() {
-                new Point(5,5),
-                new Point(5,25),
-                new Point(25,25),
-                new Point(25,5)
-            };
-            new Polyline().Algorithm(trimBorder, "Red");
         }
 
         public void LineTrim(object sender, RoutedEventArgs e)
