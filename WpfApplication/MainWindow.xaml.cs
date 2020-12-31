@@ -9,8 +9,8 @@ namespace WpfApplication
 {
     public partial class MainWindow : Window
     {
-        private int rows = 30;
-        private int columns = 30;
+        private int rows = 50;
+        private int columns = 50;
         public List<Point> _board;
         public List<Point> coordinates;
 
