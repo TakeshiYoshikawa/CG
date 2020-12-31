@@ -7,6 +7,9 @@ namespace WpfApplication
     {
         public void Algorithm(Point p1, Point p2)
         {
+            var windows = (MainWindow)Application.Current.MainWindow;
+            windows.ClearBoard();
+
             int x = 0;
             int radius = Radius(p1.X, p1.Y, p2.X, p2.Y);
             int y = radius;
