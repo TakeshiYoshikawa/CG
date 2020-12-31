@@ -33,13 +33,13 @@
 
         <StackPanel Grid.ColumnSpan="3" Margin="0,20,0,0">
             <Button Content="Line" HorizontalAlignment="Left" Margin="5,5,0,5" Width="100" Height="32" Click="Line"/>
+            <Button Content="Polyline" HorizontalAlignment="Left" Margin="5,5,0,5" Width="100" Height="32" Click="Polyline"/>
             <Button Content="Circle" HorizontalAlignment="Left" Margin="5,5,0,5" Width="100" Height="32" Click="Circle"/>
             <Button Content="Curve" HorizontalAlignment="Left" Margin="5,5,0,5" Width="100" Height="32" Click="Curve"/>
             <Button Content="Fill" HorizontalAlignment="Left" Margin="5,5,0,5" Width="100" Height="32" Click="Fill"/>
             <Button Content="Scanline" HorizontalAlignment="Left" Margin="5,5,0,5" Width="100" Height="32" Click="Scanline"/>
             <Button Content="Trim Line" HorizontalAlignment="Left" Margin="5,5,0,5" Width="100" Height="32" Click="LineTrim"/>
             <Button Content="Trim Polygon" HorizontalAlignment="Left" Margin="5,5,0,5" Width="100" Height="32" Click="PolygonTrim"/>
-            <Button Content="Polyline" HorizontalAlignment="Left" Margin="5,5,0,5" Width="100" Height="32" Click="Polyline"/>
             <Button Content="Translation" HorizontalAlignment="Left" Margin="5,5,0,5" Width="100" Height="32" Click="Translation"/>
             <Button Content="Rotation" HorizontalAlignment="Left" Margin="5,5,0,5" Width="100" Height="32" Click="Rotation"/>
             <Button Content="Scale" HorizontalAlignment="Left" Margin="5,5,0,5" Width="100" Height="32" Click="Scale"/>
