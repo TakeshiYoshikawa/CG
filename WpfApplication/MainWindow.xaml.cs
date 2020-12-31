@@ -121,9 +121,7 @@ namespace WpfApplication
         public void LineTrim(object sender, RoutedEventArgs e)
         {
             var rect = new RectangleF(5, 5, 20, 20);
-            var newLine = CohenSutherland.ClipSegment(rect, coordinates[0], coordinates[1]);
-            ClearBoard();
-            new Bresenham().Algorithm(newLine.Item1, newLine.Item2, "Red");
+            new CohenSutherland().ClipSegment(rect, coordinates[0], coordinates[1]);
         }
 
         public void PolygonTrim(object sender, RoutedEventArgs e)
