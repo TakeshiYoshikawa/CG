@@ -71,8 +71,15 @@ namespace WpfApplication
 
         public void PutPixel(int x, int y, string color)
         {
-            int index = GetIndex(x, y);
-            _board[index].Color = color;
+            // Out of range coordinates are ignored.
+            if ((x < 0 || y < 0) || (x >= rows || y >= rows))
+            {
+                ;
+            }
+            else { 
+                if (_board[GetIndex(x,y)].Color != "Red")
+                    _board[GetIndex(x, y)].Color = color;
+            }
         }
 
         public int GetIndex(int x, int y)

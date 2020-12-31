@@ -50,10 +50,7 @@ namespace WpfApplication
         public void Draw(int x, int y, string color)
         {
             var windows = (MainWindow)Application.Current.MainWindow;
-            if (windows._board[windows.GetIndex(x, y)].Color != "Red")
-            {
-                windows.PutPixel(x, y, color);
-            }
+            windows.PutPixel(x, y, color);
         }
     }
 }
