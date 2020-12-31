@@ -93,32 +93,27 @@ namespace WpfApplication
         }
         public void Line(object sender, RoutedEventArgs e)
         {
-            var bresenham = new Bresenham();
-            bresenham.Algorithm(coordinates[0], coordinates[1], "Red");
+            new Bresenham().Algorithm(coordinates[0], coordinates[1], "Red");
         }
 
         public void Circle(object sender, RoutedEventArgs e)
         {
-            var circle = new Circle();
-            circle.Algorithm(coordinates[0], coordinates[1]);
+            new Circle().Algorithm(coordinates[0], coordinates[1]);
         }
 
         public void Curve(object sender, RoutedEventArgs e)
         {
-            var curve = new Curve(coordinates);
-            curve.DrawCurve();
+            new Curve(coordinates).DrawCurve();
         }
 
         public void Polyline(object sender, RoutedEventArgs e)
         {
-            var polylines = new Polyline();
-            polylines.Algorithm(coordinates, "Red");
+            new Polyline().Algorithm(coordinates, "Red");
         }
 
         public void Fill(object sender, RoutedEventArgs e)
         {
-            var flood = new FloodFill();
-            flood.Algorithm(coordinates.Last().X, coordinates.Last().Y, "Blue", "Red");
+            new FloodFill().Algorithm(coordinates.Last().X, coordinates.Last().Y, "Blue", "Red");
         }
         public void Scanline(object sender, RoutedEventArgs e)
         {
@@ -127,7 +122,7 @@ namespace WpfApplication
 
         public void LineTrim(object sender, RoutedEventArgs e)
         {
-            var rect = new RectangleF(5, 5, 20, 20);
+            var rect = new RectangleF(6, 6, 18, 18);
             new CohenSutherland().ClipSegment(rect, coordinates[0], coordinates[1]);
         }
 
@@ -140,8 +135,7 @@ namespace WpfApplication
         public void Translation(object sender, RoutedEventArgs e)
         {
             ClearBoard();
-            var trans = new Translation(coordinates, -3, -3);
-            trans.Draw();
+            new Translation(coordinates, -3, -3).Draw();
         }
 
         public void Rotation(object sender, RoutedEventArgs e)
