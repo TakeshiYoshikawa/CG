@@ -38,7 +38,7 @@ namespace WpfApplication
             line = new Bresenham();
             Point initialPoint = pts[0];
 
-            for (double t = 0; t <= 1; t += 0.5)
+            for (double t = 0; t <= 1; t += 0.1)
             {
                 Point finalPoint = Algorithm(t);
                 line.Algorithm(initialPoint, finalPoint, "Red");
