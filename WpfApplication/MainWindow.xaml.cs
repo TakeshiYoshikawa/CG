@@ -147,7 +147,7 @@ namespace WpfApplication
         public void Scale(object sender, RoutedEventArgs e)
         {
             ClearBoard();
-            new Scale(coordinates, coordinates[0], 2, 2).Draw();
+            new Scale(coordinates, coordinates[0], 2, 4).Draw();
         }
 
         public void ClearBoard()

@@ -6,13 +6,15 @@ namespace WpfApplication
 {
     public class Scale
     {
-        public double[,] matrix;
+        public int[,] matrix;
         public List<Point> originalCoordinates;
         public Point setPoint;
 
         public Scale(List<Point> coordinates, Point p, int scaleX, int scaleY)
         {
-            matrix = new double[,] { { scaleX, 0, 0 }, { 0, scaleY, 0 }, { 0, 0, 1 } };
+            matrix = new int[,] { { scaleY, 0, 0 }, 
+                                     { 0, scaleX, 0 }, 
+                                     { 0, 0, 1 } };
             originalCoordinates = new List<Point>(coordinates);
 
             setPoint = new Point
@@ -29,9 +31,9 @@ namespace WpfApplication
             }
         }
 
-        public Point ApplyScalationMatrix(Point point, double[,] matrix)
+        public Point ApplyScalationMatrix(Point point, int[,] matrix)
         {
-            List<double> result = new List<double>() { 0, 0, 1 };
+            List<int> result = new List<int>() { 0, 0, 1 };
             List<int> vector = new List<int> { point.X, point.Y, point.H };
             List<int> _setPoint = new List<int> { setPoint.X, setPoint.Y, setPoint.H };
 
@@ -47,8 +49,8 @@ namespace WpfApplication
 
             Point RotatedPoint = new Point
             {
-                X = Convert.ToInt32(result[0]),
-                Y = Convert.ToInt32(result[1])
+                X = result[0],
+                Y = result[1]
             };
 
             return RotatedPoint;
