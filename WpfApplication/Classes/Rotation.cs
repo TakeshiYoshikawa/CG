@@ -52,14 +52,15 @@ namespace WpfApplication
             return RotatedPoint;
         }
 
-        public void Draw()
+        public List<Point> Rotate()
         {
             foreach (Point p in originalCoordinates)
             {
                 rotatedCoordinates.Add(ApplyRotationMatrix(p, matrix));
             }
-            var figure = new Polyline();
-            figure.Algorithm(rotatedCoordinates, "Red");
+            return rotatedCoordinates;
+            //var figure = new Polyline();
+            //figure.Algorithm(rotatedCoordinates, "Red");
         }
 
         ~Rotation() { }

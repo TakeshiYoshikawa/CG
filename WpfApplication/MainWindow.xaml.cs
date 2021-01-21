@@ -141,7 +141,8 @@ namespace WpfApplication
         public void Rotation(object sender, RoutedEventArgs e)
         {
             ClearBoard();
-            new Rotation(coordinates, coordinates[0], 90).Draw();
+            coordinates = new Rotation(coordinates, coordinates[0], 90).Rotate();
+            new Polyline().Algorithm(coordinates, "Red");
         }
 
         public void Scale(object sender, RoutedEventArgs e)
