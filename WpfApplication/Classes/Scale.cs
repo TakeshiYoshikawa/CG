@@ -8,6 +8,7 @@ namespace WpfApplication
     {
         public int[,] matrix;
         public List<Point> originalCoordinates;
+        public List<Point> scaledCoordinates;
         public Point setPoint;
 
         public Scale(List<Point> coordinates, Point p, int scaleX, int scaleY)
@@ -16,6 +17,8 @@ namespace WpfApplication
                                      { 0, scaleX, 0 }, 
                                      { 0, 0, 1 } };
             originalCoordinates = new List<Point>(coordinates);
+            scaledCoordinates = new List<Point>();
+
 
             setPoint = new Point
             {
@@ -47,24 +50,22 @@ namespace WpfApplication
                 result[i] += _setPoint[i];
             }
 
-            Point RotatedPoint = new Point
+            Point scaledPoint = new Point
             {
                 X = result[0],
                 Y = result[1]
             };
 
-            return RotatedPoint;
+            return scaledPoint;
         }
-
-        public void Draw()
+        
+        public List<Point> _Resize()
         {
-            List<Point> scaledCoordinates = new List<Point>();
             foreach (Point p in originalCoordinates)
             {
                 scaledCoordinates.Add(ApplyScalationMatrix(p, matrix));
             }
-            var figure = new Polyline();
-            figure.Algorithm(scaledCoordinates, "Red");
+            return scaledCoordinates;
         }
     }
 }

@@ -148,7 +148,8 @@ namespace WpfApplication
         public void Scale(object sender, RoutedEventArgs e)
         {
             ClearBoard();
-            new Scale(coordinates, coordinates[0], 2, 4).Draw();
+            coordinates = new Scale(coordinates, coordinates[0], 2, 2)._Resize();
+            new Polyline().Algorithm(coordinates, "Red");
         }
 
         public void ClearBoard()

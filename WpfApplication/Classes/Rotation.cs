@@ -59,8 +59,6 @@ namespace WpfApplication
                 rotatedCoordinates.Add(ApplyRotationMatrix(p, matrix));
             }
             return rotatedCoordinates;
-            //var figure = new Polyline();
-            //figure.Algorithm(rotatedCoordinates, "Red");
         }
 
         ~Rotation() { }
