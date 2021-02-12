@@ -60,10 +60,10 @@ namespace WpfApplication
             else if (e.Key == Key.F2)
             {
                 List<Point> trimBorder = new List<Point>() {
-                    new Point(5,5),
-                    new Point(5,25),
-                    new Point(25,25),
-                    new Point(25,5)
+                    new Point(17,17),
+                    new Point(17,34),
+                    new Point(34,34),
+                    new Point(34,17)
                 };
                 new Polyline().Algorithm(trimBorder, "Red");
             }
@@ -122,13 +122,13 @@ namespace WpfApplication
 
         public void LineTrim(object sender, RoutedEventArgs e)
         {
-            var rect = new RectangleF(6, 6, 18, 18);
+                        var rect = new RectangleF(17, 17, 17, 17);
             new CohenSutherland().ClipSegment(rect, coordinates[0], coordinates[1]);
         }
 
         public void PolygonTrim(object sender, RoutedEventArgs e)
         {
-            var rect = new Rectangle(6, 6, 18, 18);
+            var rect = new Rectangle(17, 17, 17, 17);
             new SutherlandHodgman().TrimPolygon(rect, coordinates);
         }
 
