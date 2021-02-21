@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using Microsoft.Win32;
 
 namespace WpfApplication
 {
@@ -122,7 +123,7 @@ namespace WpfApplication
 
         public void LineTrim(object sender, RoutedEventArgs e)
         {
-                        var rect = new RectangleF(17, 17, 17, 17);
+            var rect = new RectangleF(17, 17, 17, 17);
             new CohenSutherland().ClipSegment(rect, coordinates[0], coordinates[1]);
         }
 
@@ -141,7 +142,7 @@ namespace WpfApplication
         public void Rotation(object sender, RoutedEventArgs e)
         {
             ClearBoard();
-            coordinates = new Rotation(coordinates, coordinates[0], 90).Rotate();
+            coordinates = new Rotation(coordinates, coordinates[0], int.Parse(textBox1.Text)).Rotate();
             new Polyline().Algorithm(coordinates, "Red");
         }
 

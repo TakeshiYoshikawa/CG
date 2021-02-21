@@ -41,7 +41,7 @@
             <Button Content="Trim Line" HorizontalAlignment="Left" Margin="5,5,0,5" Width="100" Height="32" Click="LineTrim"/>
             <Button Content="Trim Polygon" HorizontalAlignment="Left" Margin="5,5,0,5" Width="100" Height="32" Click="PolygonTrim"/>
             <Button Content="Translation" HorizontalAlignment="Left" Margin="5,5,0,5" Width="100" Height="32" Click="Translation"/>
-            <Button Content="Rotation" HorizontalAlignment="Left" Margin="5,5,0,5" Width="100" Height="32" Click="Rotation"/>
+            <Button Content="Rotation" HorizontalAlignment="Left" Margin="5,5,0,25" Width="100" Height="32" Click="Rotation"/>
             <Button Content="Scale" HorizontalAlignment="Left" Margin="5,5,0,5" Width="100" Height="32" Click="Scale"/>
             <Button Content="Orthogonal" HorizontalAlignment="Left" Margin="5,5,0,5" Width="100" Height="32"/>
             <Button Content="Perspective" HorizontalAlignment="Left" Margin="5,5,0,5" Width="100" Height="32"/>
@@ -69,5 +69,9 @@
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
         </Grid>
+
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="10,439,0,0" Name="textBox1" VerticalAlignment="Top" Width="91" Text="Rotation degree" >
+            
+        </TextBox>
     </Grid>
 </Window>
