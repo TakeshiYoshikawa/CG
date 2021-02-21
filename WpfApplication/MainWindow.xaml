@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Title="Computer Graphics"
-        MinHeight="200" MinWidth="300"
+        MinHeight="400" MinWidth="500"
         Height="650" Width="800"
         xmlns:fw="clr-namespace:SourceChord.FluentWPF;assembly=FluentWPF"
         KeyDown="Utilities" 
@@ -40,9 +40,9 @@
             <Button Content="Scanline" HorizontalAlignment="Left" Margin="5,5,0,5" Width="100" Height="32" Click="Scanline"/>
             <Button Content="Trim Line" HorizontalAlignment="Left" Margin="5,5,0,5" Width="100" Height="32" Click="LineTrim"/>
             <Button Content="Trim Polygon" HorizontalAlignment="Left" Margin="5,5,0,5" Width="100" Height="32" Click="PolygonTrim"/>
-            <Button Content="Translation" HorizontalAlignment="Left" Margin="5,5,0,5" Width="100" Height="32" Click="Translation"/>
+            <Button Content="Translation" HorizontalAlignment="Left" Margin="5,5,0,25" Width="100" Height="32" Click="Translation"/>
             <Button Content="Rotation" HorizontalAlignment="Left" Margin="5,5,0,25" Width="100" Height="32" Click="Rotation"/>
-            <Button Content="Scale" HorizontalAlignment="Left" Margin="5,5,0,5" Width="100" Height="32" Click="Scale"/>
+            <Button Content="Scale" HorizontalAlignment="Left" Margin="5,5,0,25" Width="100" Height="32" Click="Scale"/>
             <Button Content="Orthogonal" HorizontalAlignment="Left" Margin="5,5,0,5" Width="100" Height="32"/>
             <Button Content="Perspective" HorizontalAlignment="Left" Margin="5,5,0,5" Width="100" Height="32"/>
         </StackPanel>
@@ -70,8 +70,11 @@
             </ItemsControl>
         </Grid>
 
-        <TextBox Height="23" HorizontalAlignment="Left" Margin="10,439,0,0" Name="textBox1" VerticalAlignment="Top" Width="91" Text="Rotation degree" >
-            
-        </TextBox>
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="10,458,0,0" Name="RotationDegree" VerticalAlignment="Top" Width="91" Text="Rotation degree" ></TextBox>
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="10,396,0,0" Name="tx" VerticalAlignment="Top" Width="41" Text="tx" ></TextBox>
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="56,396,0,0" Name="ty" VerticalAlignment="Top" Width="45" Text="ty" ></TextBox>
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="6,520,0,0" Name="scaleX" VerticalAlignment="Top" Width="45" Text="scale X" ></TextBox>
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="56,520,0,0" Name="scaleY" VerticalAlignment="Top" Width="45" Text="scale Y" ></TextBox>
+
     </Grid>
 </Window>

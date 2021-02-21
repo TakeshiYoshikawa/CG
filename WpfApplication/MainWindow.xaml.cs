@@ -136,20 +136,20 @@ namespace WpfApplication
         public void Translation(object sender, RoutedEventArgs e)
         {
             ClearBoard();
-            new Translation(coordinates, -3, -3).Draw();
+            new Translation(coordinates, int.Parse(tx.Text), int.Parse(ty.Text)).Draw();
         }
 
         public void Rotation(object sender, RoutedEventArgs e)
         {
             ClearBoard();
-            coordinates = new Rotation(coordinates, coordinates[0], int.Parse(textBox1.Text)).Rotate();
+            coordinates = new Rotation(coordinates, coordinates[0], int.Parse(RotationDegree.Text)).Rotate();
             new Polyline().Algorithm(coordinates, "Red");
         }
 
         public void Scale(object sender, RoutedEventArgs e)
         {
             ClearBoard();
-            coordinates = new Scale(coordinates, coordinates[0], 2, 2)._Resize();
+            coordinates = new Scale(coordinates, coordinates[0], int.Parse(scaleX.Text), int.Parse(scaleY.Text))._Resize();
             new Polyline().Algorithm(coordinates, "Red");
         }
 
