@@ -166,7 +166,9 @@ namespace WpfApplication
                 new Point(9,25,10)
             };
 
-            new Projection(coordinates).Draw();
+            var isometricCube = new Projection(coordinates);
+            isometricCube.CalculateRotation();
+            isometricCube.Draw();
         }
 
         public void ClearBoard()
