@@ -75,6 +75,7 @@
     </ApplicationDefinition>
     <Compile Include="Classes\Bresenham.cs" />
     <Compile Include="Classes\Circle.cs" />
+    <Compile Include="Classes\Projection.cs" />
     <Compile Include="Classes\CohenSutherland.cs" />
     <Compile Include="Converters\BaseGenericConverter.cs" />
     <Compile Include="Converters\ColorToBrushConverter.cs" />

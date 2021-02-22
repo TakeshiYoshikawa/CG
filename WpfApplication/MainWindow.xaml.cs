@@ -153,6 +153,22 @@ namespace WpfApplication
             new Polyline().Algorithm(coordinates, "Red");
         }
 
+        public void Projection(object sender, RoutedEventArgs e)
+        {
+            var coordinates = new List<Point>(){
+                new Point(34,17,20),
+                new Point(34,34,20),
+                new Point(17,34,20),
+                new Point(17,17,20),
+                new Point(26,25,10),
+                new Point(26,40,10),
+                new Point(9,40,10),
+                new Point(9,25,10)
+            };
+
+            new Projection(coordinates).Draw();
+        }
+
         public void ClearBoard()
         {
             foreach (var i in _board)
