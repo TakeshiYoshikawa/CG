@@ -13,9 +13,17 @@ namespace WpfApplication
             Y = y;
             H = 1;
         }
+        public Point(int x, int y, int z)
+        {
+            X = x;
+            Y = y;
+            Z = z;
+            H = 1;
+        }
 
         public int X { get; set; }
         public int Y { get; set; }
+        public int Z { get; set; }
         public int H { get; set; }
 
         public Point Dot(double t, Point p)
