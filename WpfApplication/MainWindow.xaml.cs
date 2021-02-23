@@ -171,6 +171,24 @@ namespace WpfApplication
             isometricCube.Draw();
         }
 
+        public void Perspective(object sender, RoutedEventArgs e)
+        {
+            var coordinates = new List<Point>(){
+                new Point(0,0,-8),
+                new Point(8,0,-8),
+                new Point(8,8,-8),
+                new Point(0,8,-8),
+                new Point(0,0,-12),
+                new Point(8,0,-12),
+                new Point(8,8,-12),
+                new Point(0,8,-12)
+            };
+
+            var perspectiveCube = new Perspective(coordinates);
+            perspectiveCube.CalculatePerspective();
+            perspectiveCube.Draw();
+        }
+
         public void ClearBoard()
         {
             foreach (var i in _board)

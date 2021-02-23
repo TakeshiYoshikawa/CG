@@ -43,8 +43,8 @@
             <Button Content="Translation" HorizontalAlignment="Left" Margin="5,5,0,25" Width="100" Height="32" Click="Translation"/>
             <Button Content="Rotation" HorizontalAlignment="Left" Margin="5,5,0,25" Width="100" Height="32" Click="Rotation"/>
             <Button Content="Scale" HorizontalAlignment="Left" Margin="5,5,0,25" Width="100" Height="32" Click="Scale"/>
-            <Button Content="Projection" HorizontalAlignment="Left" Margin="5,5,0,5" Width="100" Height="32" Click="Projection"/>
-            <Button Content="Perspective" HorizontalAlignment="Left" Margin="5,5,0,5" Width="100" Height="32"/>
+            <Button Content="Orthogonal" HorizontalAlignment="Left" Margin="5,5,0,5" Width="100" Height="32" Click="Projection"/>
+            <Button Content="Perspective" HorizontalAlignment="Left" Margin="5,5,0,5" Width="100" Height="32" Click="Perspective"/>
         </StackPanel>
 
         <Grid fw:PointerTracker.Enabled="True">
